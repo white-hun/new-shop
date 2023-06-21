@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import reportWebVitals from "./reportWebVitals";
+
 import App from "./App";
 import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
-import MyCart from "./pages/MyCart";
 import AllProducts from "./pages/AllProducts";
 import NewProduct from "./pages/NewProduct";
 import ProductDetail from "./pages/ProductDetail";
@@ -32,3 +33,5 @@ root.render(
   <RouterProvider router={router} />
   // </React.StrictMode>
 );
+
+reportWebVitals();
