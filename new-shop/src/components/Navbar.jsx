@@ -15,12 +15,12 @@ export default function Navbar() {
         <GiSplitCross className="mr-1" />
         <p>POHS</p>
       </Link>
-      <nav>
-        <Link to="/products" className="text-2xl">
+      <nav className="flex items-center">
+        <Link to="/products" className="text-2xl mr-5">
           PRODUCT
         </Link>
         {user && (
-          <Link>
+          <Link to="/carts" className="text-2xl mr-6">
             <BsBag />
           </Link>
         )}

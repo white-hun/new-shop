@@ -23,7 +23,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
 const auth = getAuth();
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 //login
 export async function login() {
