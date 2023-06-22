@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { GiSplitCross } from "react-icons/gi";
 import { BsBag, BsPencil } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -25,16 +25,16 @@ export default function Navbar() {
         <Link to="/products" className="text-2xl mr-5">
           PRODUCT
         </Link>
-        {user && (
+        {user && user.uid !== process.env.REACT_APP_ADMIN_UID && (
           <Link to="/carts" className="text-2xl mr-6">
             <BsBag />
           </Link>
         )}
-        {/* {user && user.admin && (
+        {user && user.uid === process.env.REACT_APP_ADMIN_UID && (
           <Link>
-            <BsPencil />
+            <BsPencil className="text-2xl mr-6" />
           </Link>
-        )} */}
+        )}
         {user && <UserProfile user={user} />}
         {!user && <Button text={"Login"} onClick={handleLogin} />}
         {user && <Button text={"Logout"} onClick={logout} />}
