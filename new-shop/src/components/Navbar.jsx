@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GiSplitCross } from "react-icons/gi";
 import { BsBag, BsPencil } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import UserProfile from "./UserProfile";
 import Button from "./ui/Button";
 import { useAuthContext } from "../context/AuthContext";
+import { setUserInfo } from "../api/firebase";
 
 export default function Navbar() {
-  const { user, login, logout } = useAuthContext();
+  const { user, uid, login, logout } = useAuthContext();
+
+  const handleLogin = () => {
+    login();
+    setUserInfo(uid, user);
+  };
 
   return (
     <header className="flex justify-between">
@@ -30,7 +36,7 @@ export default function Navbar() {
           </Link>
         )} */}
         {user && <UserProfile user={user} />}
-        {!user && <Button text={"Login"} onClick={login} />}
+        {!user && <Button text={"Login"} onClick={handleLogin} />}
         {user && <Button text={"Logout"} onClick={logout} />}
       </nav>
     </header>

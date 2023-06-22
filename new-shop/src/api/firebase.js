@@ -7,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -40,6 +40,20 @@ export function onUserStateChange(callback) {
   const auth = getAuth();
   onAuthStateChanged(auth, async (user) => {
     // const updatedUser = user ? await adminUser(user) : null;
+
     callback(user);
+    // setUserData();
   });
+}
+
+export async function setUserInfo(uid, user) {
+  uid === process.env.REACT_APP_ADMIN_UID
+    ? await setDoc(doc(db, "users", "admin", `${uid}`, "adminInfo"), {
+        name: user.displayName,
+        email: user.email,
+      })
+    : await setDoc(doc(db, "users", "user", `${uid}`, "userInfo"), {
+        name: user.displayName,
+        email: user.email,
+      });
 }
