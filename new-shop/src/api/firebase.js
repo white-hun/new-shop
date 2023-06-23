@@ -7,7 +7,8 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { doc, getFirestore, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getFirestore, setDoc } from "firebase/firestore";
+import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -56,4 +57,28 @@ export async function setUserInfo(uid, user) {
         name: user.displayName,
         email: user.email,
       });
+}
+
+// 제품 추가
+export async function addNewProduct(product, imageUrl) {
+  const id = uuidv4();
+  const products = collection(db, "products", "product", "items");
+  return await addDoc(products, {
+    ...product,
+    id,
+    imageUrl,
+    title: product.title,
+    price: product.price,
+    category: product.category,
+    size: {
+      default: {
+        small: product.size.includes("s") === true && "S",
+        medium: product.size.includes("m") === true && "M",
+        large: product.size.includes("l") === true && "L",
+        extralarge: product.size.includes("xl") === true && "XL",
+        doubleextralarge: product.size.includes("xxl") === true && "XXL",
+      },
+    },
+    description: product.description,
+  });
 }

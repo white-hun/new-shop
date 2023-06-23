@@ -9,7 +9,9 @@ export default function NewProduct() {
 
   const handleChange = () => {};
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <section className="w-full text-center">
@@ -54,8 +56,8 @@ export default function NewProduct() {
         />
         <input
           type="text"
-          name="options"
-          value={product.options ?? ""}
+          name="size"
+          value={product.size ?? ""}
           placeholder="옵션(콤마(,)로 구분)"
           required
           onChange={handleChange}
