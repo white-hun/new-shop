@@ -63,7 +63,7 @@ export async function setUserInfo(uid, user) {
 // 제품 추가
 export async function addNewProduct(product, imageUrl) {
   const id = uuidv4();
-  const products = collection(db, "products", "product", "items");
+  const products = collection(db, "products", "items", "product");
   return await addDoc(products, {
     ...product,
     id,
