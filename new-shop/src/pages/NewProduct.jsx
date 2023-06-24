@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import Button from "../components/ui/Button";
+import { uploadImage } from "../api/upload";
+import { addNewProduct } from "../api/firebase";
 
 export default function NewProduct() {
   const [product, setProduct] = useState({});
@@ -7,10 +9,33 @@ export default function NewProduct() {
   const [success, setSuccess] = useState();
   const [isUploading, setIsUploading] = useState(false);
 
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "file") {
+      setFile(files && files[0]);
+      return;
+    }
+    setProduct((product) => ({ ...product, [name]: value }));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsUploading(true);
+    uploadImage(file) //
+      .then((url) => {
+        addNewProduct.mutate(
+          { product, url },
+          {
+            onSuccess: () => {
+              setSuccess("성공적으로 제품이 추가되었습니다.");
+              setTimeout(() => {
+                setSuccess(null);
+              }, 3000);
+            },
+          }
+        );
+      })
+      .finally(() => setIsUploading(false));
   };
 
   return (

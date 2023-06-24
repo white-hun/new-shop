@@ -31,8 +31,8 @@ export default function Navbar() {
           </Link>
         )}
         {user && user.uid === process.env.REACT_APP_ADMIN_UID && (
-          <Link>
-            <BsPencil className="text-2xl mr-6" />
+          <Link to="/product/new" className="text-2xl mr-6">
+            <BsPencil />
           </Link>
         )}
         {user && <UserProfile user={user} />}

@@ -7,7 +7,7 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { addDoc, collection, doc, getFirestore, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
@@ -47,6 +47,7 @@ export function onUserStateChange(callback) {
   });
 }
 
+// 유저 정보 저장
 export async function setUserInfo(uid, user) {
   uid === process.env.REACT_APP_ADMIN_UID
     ? await setDoc(doc(db, "users", "admin", `${uid}`, "adminInfo"), {
@@ -81,4 +82,11 @@ export async function addNewProduct(product, imageUrl) {
     },
     description: product.description,
   });
+}
+
+// 제품 가져오기
+export async function getProduct() {
+  const q = query(collection(db, "products", "product", "items"));
+  const querySnapShot = await getDocs(q);
+  return querySnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 }
