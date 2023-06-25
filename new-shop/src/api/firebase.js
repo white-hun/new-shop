@@ -26,6 +26,21 @@ const provider = new GoogleAuthProvider();
 const auth = getAuth();
 export const db = getFirestore(app);
 
+// 유저 정보 저장
+export async function setUserInfo(user, uid) {
+  const name = user.displayName;
+  const email = user.email;
+  uid === process.env.REACT_APP_ADMIN_UID
+    ? await setDoc(doc(db, "users", "admin", `${uid}`, "adminInfo"), {
+        name,
+        email,
+      })
+    : await setDoc(doc(db, "users", "user", `${uid}`, "userInfo"), {
+        name,
+        email,
+      });
+}
+
 //login
 export async function login() {
   return signInWithPopup(auth, provider).catch(console.error);
@@ -41,23 +56,8 @@ export function onUserStateChange(callback) {
   const auth = getAuth();
   onAuthStateChanged(auth, async (user) => {
     // const updatedUser = user ? await adminUser(user) : null;
-
     callback(user);
-    // setUserData();
   });
-}
-
-// 유저 정보 저장
-export async function setUserInfo(uid, user) {
-  uid === process.env.REACT_APP_ADMIN_UID
-    ? await setDoc(doc(db, "users", "admin", `${uid}`, "adminInfo"), {
-        name: user.displayName,
-        email: user.email,
-      })
-    : await setDoc(doc(db, "users", "user", `${uid}`, "userInfo"), {
-        name: user.displayName,
-        email: user.email,
-      });
 }
 
 // 제품 추가

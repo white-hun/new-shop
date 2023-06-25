@@ -10,9 +10,8 @@ import { setUserInfo } from "../api/firebase";
 export default function Navbar() {
   const { user, uid, login, logout } = useAuthContext();
 
-  const handleLogin = () => {
-    setUserInfo(uid, user);
-    login();
+  const handleLogin = async () => {
+    login().then(() => setUserInfo(user, uid));
   };
 
   return (
