@@ -11,8 +11,8 @@ export default function Navbar() {
   const { user, uid, login, logout } = useAuthContext();
 
   const handleLogin = () => {
-    login();
     setUserInfo(uid, user);
+    login();
   };
 
   return (
