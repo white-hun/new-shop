@@ -8,13 +8,14 @@ export function AuthContextProvider({ children }) {
 
   useEffect(() => {
     onUserStateChange((user) => {
-      console.log(user);
       setUser(user);
+      console.log("4", user);
     });
+    return console.log("5", user);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, uid: user && user.uid, login, logout }}>
+    <AuthContext.Provider value={{ user, uid: user && user.uid, name: user && user.displayName, email: user && user.email, login: login, logout: logout }}>
       {children}
     </AuthContext.Provider>
   );
