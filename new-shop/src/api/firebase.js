@@ -1,12 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {
-  GoogleAuthProvider,
-  getAuth,
-  signInWithPopup,
-  signOut,
-  onAuthStateChanged,
-} from "firebase/auth";
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,7 +9,7 @@ const firebaseConfig = {
   authDomain: process.env.REACT_APP_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_PROJECT_ID,
   storageBucket: process.env.REACT_APP_STORAGE_BUCKE,
-  messagingSenderId: process.env.REACT_APP_MESSAGEING_SENDE,
+  messagingSenderId: process.env.REACT_APP_MESSAGEING_SENDER_ID,
   appId: process.env.RREACT_APP_APP_ID,
   measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 };
