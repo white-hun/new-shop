@@ -12,8 +12,8 @@ export default function Navbar() {
 
   const handleLogin = () => {
     login();
-    // console.log("1", user, uid);
-    // console.log("2", name, email);
+    console.log("1", user, uid);
+    console.log("2", name, email);
     // setUserInfo(uid, name, email);
   };
 

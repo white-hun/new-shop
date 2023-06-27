@@ -15,7 +15,16 @@ export function AuthContextProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, uid: user && user.uid, name: user && user.displayName, email: user && user.email, login: login, logout: logout }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        uid: user && user.uid,
+        // name: user && user.displayName,
+        // email: user && user.email,
+        login: login,
+        logout: logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
