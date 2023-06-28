@@ -9,8 +9,8 @@ export function AuthContextProvider({ children }) {
   useEffect(() => {
     onUserStateChange((user) => {
       setUser(user);
+      setUserInfo(user);
     });
-    // setUserInfo(user.uid, user.displayName, user.email);
   }, []);
 
   return (
@@ -18,6 +18,8 @@ export function AuthContextProvider({ children }) {
       value={{
         user,
         uid: user && user.uid,
+        // name: user && user.displayName,
+        // email: user && user.email,
         login: login,
         logout: logout,
       }}

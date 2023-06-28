@@ -1,8 +1,15 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { GoogleAuthProvider, getAuth, signInWithPopup, signOut, onAuthStateChanged } from "firebase/auth";
+import {
+  GoogleAuthProvider,
+  getAuth,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged,
+} from "firebase/auth";
 import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
+import { useAuthContext } from "../context/AuthContext";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -36,20 +43,19 @@ export function onUserStateChange(callback) {
   onAuthStateChanged(auth, async (user) => {
     // const updatedUser = user ? await adminUser(user) : null;
     callback(user);
-    console.log("3", user);
   });
 }
 
 // 유저 정보 저장
-export async function setUserInfo(uid, name, email) {
-  uid === process.env.REACT_APP_ADMIN_UID
-    ? await setDoc(doc(db, "users", "admin", `${uid}`, "adminInfo"), {
-        name,
-        email,
+export async function setUserInfo(user) {
+  user.uid === process.env.REACT_APP_ADMIN_UID
+    ? await setDoc(doc(db, "users", "admin", `${user.uid}`, "adminInfo"), {
+        name: user.displayName,
+        email: user.email,
       })
-    : await setDoc(doc(db, "users", "user", `${uid}`, "userInfo"), {
-        name,
-        email,
+    : await setDoc(doc(db, "users", "user", `${user.uid}`, "userInfo"), {
+        name: user.displayName,
+        email: user.email,
       });
 }
 
