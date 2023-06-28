@@ -10,12 +10,12 @@ import { setUserInfo } from "../api/firebase";
 export default function Navbar() {
   const { user, uid, name, email, login, logout } = useAuthContext();
 
-  const handleLogin = () => {
-    login();
-    console.log("1", user, uid);
-    console.log("2", name, email);
-    // setUserInfo(uid, name, email);
-  };
+  // const handleLogin = () => {
+  //   login();
+  //   console.log("1", user, uid);
+  //   console.log("2", name, email);
+  //   // setUserInfo(uid, name, email);
+  // };
 
   return (
     <header className="flex justify-between">
@@ -38,7 +38,7 @@ export default function Navbar() {
           </Link>
         )}
         {user && <UserProfile user={user} />}
-        {!user && <Button text={"Login"} onClick={handleLogin} />}
+        {!user && <Button text={"Login"} onClick={login} />}
         {user && <Button text={"Logout"} onClick={logout} />}
       </nav>
     </header>
