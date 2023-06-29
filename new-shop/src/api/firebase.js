@@ -47,8 +47,8 @@ export function onUserStateChange(callback) {
 }
 
 // 유저 정보 저장
-export async function setUserInfo(user) {
-  user.uid === process.env.REACT_APP_ADMIN_UID
+export async function setUserInfo(user, uid) {
+  uid === process.env.REACT_APP_ADMIN_UID
     ? await setDoc(doc(db, "users", "admin", `${user.uid}`, "adminInfo"), {
         name: user.displayName,
         email: user.email,
@@ -66,10 +66,10 @@ export async function addNewProduct(product, imageUrl) {
   return await addDoc(products, {
     ...product,
     id,
-    imageUrl,
     title: product.title,
     price: product.price,
     category: product.category,
+    imageUrl,
     size: {
       default: {
         small: product.size.includes("s") === true && "S",
