@@ -49,14 +49,22 @@ export function onUserStateChange(callback) {
 // 유저 정보 저장
 export async function setUserInfo(user, uid) {
   uid === process.env.REACT_APP_ADMIN_UID
-    ? await setDoc(doc(db, "users", "admin", `${user.uid}`, "adminInfo"), {
-        name: user.displayName,
-        email: user.email,
-      })
-    : await setDoc(doc(db, "users", "user", `${user.uid}`, "userInfo"), {
-        name: user.displayName,
-        email: user.email,
-      });
+    ? await setDoc(
+        doc(db, "users", "admin", `${user.uid}`, "adminInfo"),
+        {
+          name: user.displayName,
+          email: user.email,
+        },
+        { merge: true }
+      )
+    : await setDoc(
+        doc(db, "users", "user", `${user.uid}`, "userInfo"),
+        {
+          name: user.displayName,
+          email: user.email,
+        },
+        { merge: true }
+      );
 }
 
 // 제품 추가
