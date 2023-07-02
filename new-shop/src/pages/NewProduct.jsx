@@ -14,8 +14,8 @@ export default function NewProduct() {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    console.log(e.target.name);
-    console.log(e.target.value);
+    // console.log(e.target.name);
+    // console.log(e.target.value);
     console.log(e.target.files);
     if (name === "file") {
       setFile(files && files[0]);
@@ -27,6 +27,8 @@ export default function NewProduct() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
+    console.log("1", product.title);
+    console.log("2", file);
     uploadImage(file) //
       .then((url) => {
         addProduct.mutate(
@@ -42,6 +44,7 @@ export default function NewProduct() {
         );
       })
       .finally(() => setIsUploading(false));
+
     // .then((url) => {
     //   addProduct.mutate(
     //     { product, url },

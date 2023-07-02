@@ -9,7 +9,6 @@ import {
 } from "firebase/auth";
 import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
-import { useAuthContext } from "../context/AuthContext";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -71,21 +70,19 @@ export async function setUserInfo(user, uid) {
 export async function addNewProduct(product, imageUrl) {
   const id = uuidv4();
   const products = collection(db, "products", "items", "product");
-  return await addDoc(products, {
+  await addDoc(products, {
     ...product,
     id,
     title: product.title,
     price: product.price,
     category: product.category,
-    imageUrl,
+    imageUrl: imageUrl,
     size: {
-      default: {
-        small: product.size.includes("s") === true && "S",
-        medium: product.size.includes("m") === true && "M",
-        large: product.size.includes("l") === true && "L",
-        extralarge: product.size.includes("xl") === true && "XL",
-        doubleextralarge: product.size.includes("xxl") === true && "XXL",
-      },
+      small: product.size.includes("s") === true && "S",
+      medium: product.size.includes("m") === true && "M",
+      large: product.size.includes("l") === true && "L",
+      extralarge: product.size.includes("xl") === true && "XL",
+      doubleextralarge: product.size.includes("xxl") === true && "XXL",
     },
     description: product.description,
   });
