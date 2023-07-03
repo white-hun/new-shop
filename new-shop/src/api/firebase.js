@@ -92,3 +92,23 @@ export async function getProduct() {
   const querySnapShot = await getDocs(q);
   return querySnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 }
+
+// 카트 추가
+export async function addCartProduct(product, imageUrl) {
+  const id = uuidv4();
+  const carts = collection(db, "users", "user", `${uid}`, "userBasket", "basket");
+  await addDoc(
+    carts,
+    {
+      ...product,
+      id,
+      imageUrl,
+      title: product.title,
+      price: product.price,
+      category: product.category,
+      description: product.description,
+      size: product.size.split(","),
+    },
+    { merge: true }
+  );
+}
