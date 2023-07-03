@@ -34,6 +34,7 @@ export default function NewProduct() {
     setIsUploading(true);
     uploadImage(file) //
       .then((url) => {
+        console.log(product, url);
         addProduct.mutate(
           { product, url },
           {
