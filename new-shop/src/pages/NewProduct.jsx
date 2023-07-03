@@ -5,30 +5,33 @@ import useProducts from "../hooks/useProducts";
 import { addNewProduct } from "../api/firebase";
 
 export default function NewProduct() {
-  const [product, setProduct] = useState({});
+  const option = {
+    title: "",
+    price: "",
+    category: "",
+    description: "",
+    size: "",
+  };
+  const [product, setProduct] = useState(option);
   const [file, setFile] = useState();
   const [success, setSuccess] = useState();
   const [isUploading, setIsUploading] = useState(false);
+  const { title, price, category, description, size } = product;
 
   const { addProduct } = useProducts();
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    // console.log(e.target.name);
-    // console.log(e.target.value);
-    console.log(e.target.files);
     if (name === "file") {
       setFile(files && files[0]);
       return;
     }
-    setProduct((product) => ({ ...product, [name]: value }));
+    setProduct({ ...product, [name]: value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsUploading(true);
-    console.log("1", product.title);
-    console.log("2", file);
     uploadImage(file) //
       .then((url) => {
         addProduct.mutate(
@@ -73,7 +76,7 @@ export default function NewProduct() {
         <input
           type="text"
           name="title"
-          value={product.title ?? ""}
+          value={title}
           placeholder="제품명"
           required
           onChange={handleChange}
@@ -81,7 +84,7 @@ export default function NewProduct() {
         <input
           type="number"
           name="price"
-          value={product.price ?? ""}
+          value={price}
           placeholder="가격"
           required
           onChange={handleChange}
@@ -89,7 +92,7 @@ export default function NewProduct() {
         <input
           type="text"
           name="category"
-          value={product.category ?? ""}
+          value={category}
           placeholder="카테고리"
           required
           onChange={handleChange}
@@ -97,7 +100,7 @@ export default function NewProduct() {
         <input
           type="text"
           name="description"
-          value={product.description ?? ""}
+          value={description}
           placeholder="제품설명"
           required
           onChange={handleChange}
@@ -105,7 +108,7 @@ export default function NewProduct() {
         <input
           type="text"
           name="size"
-          value={product.size ?? ""}
+          value={size}
           placeholder="옵션(콤마(,)로 구분)"
           required
           onChange={handleChange}

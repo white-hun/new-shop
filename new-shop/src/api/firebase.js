@@ -23,7 +23,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const provider = new GoogleAuthProvider();
-const auth = getAuth();
+const auth = getAuth(app);
 export const db = getFirestore(app);
 
 //login
@@ -70,22 +70,27 @@ export async function setUserInfo(user, uid) {
 export async function addNewProduct(product, imageUrl) {
   const id = uuidv4();
   const products = collection(db, "products", "items", "product");
-  await addDoc(products, {
-    ...product,
-    id,
-    title: product.title,
-    price: product.price,
-    category: product.category,
-    imageUrl: imageUrl,
-    size: {
-      small: product.size.includes("s") === true && "S",
-      medium: product.size.includes("m") === true && "M",
-      large: product.size.includes("l") === true && "L",
-      extralarge: product.size.includes("xl") === true && "XL",
-      doubleextralarge: product.size.includes("xxl") === true && "XXL",
+  await addDoc(
+    products,
+    {
+      ...product,
+      id,
+      imageUrl,
+      title: product.title,
+      price: product.price,
+      category: product.category,
+      description: product.description,
+      size: product.size.split(","),
+      // size: {
+      //   small: product.size.includes("s") === true && "S",
+      //   medium: product.size.includes("m") === true && "M",
+      //   large: product.size.includes("l") === true && "L",
+      //   extralarge: product.size.includes("xl") === true && "XL",
+      //   doubleextralarge: product.size.includes("xxl") === true && "XXL",
+      // },
     },
-    description: product.description,
-  });
+    { merge: true }
+  );
 }
 
 // 제품 가져오기

@@ -2,9 +2,9 @@ export async function uploadImage(file) {
   const data = new FormData();
   data.append("file", file);
   data.append("upload_preset", process.env.REACT_APP_CLOUDINARY_PRESET);
-  // Axios.post(process.env.REACT_APP_CLOUDINARY_URL, data).then((response) => {
-  //   console.log("1", response);
-  // });
+
+  // Axios.post(process.env.REACT_APP_CLOUDINARY_URL, data) //
+  //   .then((response) => response.data.url);
   return (
     fetch(process.env.REACT_APP_CLOUDINARY_URL, {
       method: "POST",
