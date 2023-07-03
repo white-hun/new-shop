@@ -81,13 +81,6 @@ export async function addNewProduct(product, imageUrl) {
       category: product.category,
       description: product.description,
       size: product.size.split(","),
-      // size: {
-      //   small: product.size.includes("s") === true && "S",
-      //   medium: product.size.includes("m") === true && "M",
-      //   large: product.size.includes("l") === true && "L",
-      //   extralarge: product.size.includes("xl") === true && "XL",
-      //   doubleextralarge: product.size.includes("xxl") === true && "XXL",
-      // },
     },
     { merge: true }
   );
@@ -95,7 +88,7 @@ export async function addNewProduct(product, imageUrl) {
 
 // 제품 가져오기
 export async function getProduct() {
-  const q = query(collection(db, "products", "product", "items"));
+  const q = query(collection(db, "products", "items", "product"));
   const querySnapShot = await getDocs(q);
   return querySnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 }

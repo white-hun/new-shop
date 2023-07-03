@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Button from "../components/ui/Button";
 import { uploadImage } from "../api/upload";
 import useProducts from "../hooks/useProducts";
-import { addNewProduct } from "../api/firebase";
 
 export default function NewProduct() {
   const option = {
