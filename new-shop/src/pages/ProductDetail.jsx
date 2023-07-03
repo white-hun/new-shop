@@ -35,9 +35,9 @@ export default function ProductDetail() {
         <div>
           <label htmlFor="select">Option</label>
           <select id="select" onChange={handleSelect} value={selected}>
-            {}
+            {size && size.map((size, index) => <option key={index}>{size}</option>)}
           </select>
-          {}
+          {success && <p className="my-2">{success}</p>}
           <Button text="장바구니에 추가" onClick={handleClick} />
         </div>
       </section>
