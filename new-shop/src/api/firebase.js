@@ -54,8 +54,8 @@ export function onUserStateChange(callback) {
 }
 
 // 유저 정보 저장
-export async function setUserInfo(user, uid) {
-  uid && uid === process.env.REACT_APP_ADMIN_UID
+export async function setUserInfo(user) {
+  user && user.uid === process.env.REACT_APP_ADMIN_UID
     ? await setDoc(
         doc(db, "users", "admin", `${user.uid}`, "adminInfo"),
         {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { GiSplitCross } from "react-icons/gi";
 import { BsBag, BsPencil } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -8,11 +8,11 @@ import { useAuthContext } from "../context/AuthContext";
 import { setUserInfo } from "../api/firebase";
 
 export default function Navbar() {
-  const { user, userId, login, logout } = useAuthContext();
+  const { user, login, logout } = useAuthContext();
 
-  const handleLogin = async () => {
-    login().then(setUserInfo(user, user.uid));
-  };
+  useEffect(() => {
+    user && setUserInfo(user);
+  }, []);
 
   return (
     <header className="flex justify-between">
@@ -35,7 +35,7 @@ export default function Navbar() {
           </Link>
         )}
         {user && <UserProfile user={user} />}
-        {!user && <Button text={"Login"} onClick={handleLogin} />}
+        {!user && <Button text={"Login"} onClick={login} />}
         {user && <Button text={"Logout"} onClick={logout} />}
       </nav>
     </header>
