@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthContext } from "../context/AuthContext";
-import { addOrUpdateToCart, getCart, removeFromCart } from "../api/firebase";
+import { addToCart, getCart, removeFromCart } from "../api/firebase";
 
 export default function useCart() {
   const { uid } = useAuthContext();
@@ -10,7 +10,7 @@ export default function useCart() {
     enabled: !!uid, // uid가 false인 경우 enabled 처리 => 이 때는 query가 수행되지 않음
   });
 
-  const addOrUpdateItem = useMutation((product) => addOrUpdateToCart(uid, product), {
+  const addOrUpdateItem = useMutation((product) => addToCart(uid, product), {
     onSuccess: () => {
       queryClient.invalidateQueries(["carts", uid]);
     },

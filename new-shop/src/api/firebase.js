@@ -7,7 +7,16 @@ import {
   signOut,
   onAuthStateChanged,
 } from "firebase/auth";
-import { addDoc, collection, doc, getDocs, getFirestore, query, setDoc } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  getFirestore,
+  query,
+  setDoc,
+} from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
 const firebaseConfig = {
@@ -40,14 +49,13 @@ export async function logout() {
 export function onUserStateChange(callback) {
   const auth = getAuth();
   onAuthStateChanged(auth, async (user) => {
-    // const updatedUser = user ? await adminUser(user) : null;
     callback(user);
   });
 }
 
 // 유저 정보 저장
 export async function setUserInfo(user, uid) {
-  uid === process.env.REACT_APP_ADMIN_UID
+  uid && uid === process.env.REACT_APP_ADMIN_UID
     ? await setDoc(
         doc(db, "users", "admin", `${user.uid}`, "adminInfo"),
         {
@@ -94,21 +102,34 @@ export async function getProduct() {
 }
 
 // 카트 추가
-export async function addCartProduct(product, imageUrl) {
-  const id = uuidv4();
+export async function addToCart(uid, product) {
   const carts = collection(db, "users", "user", `${uid}`, "userBasket", "basket");
   await addDoc(
     carts,
     {
       ...product,
-      id,
-      imageUrl,
+      id: product.id,
+      imageUrl: product.imageUrl,
       title: product.title,
       price: product.price,
       category: product.category,
       description: product.description,
-      size: product.size.split(","),
+      size: product.selected,
+      quantity: product.quantity,
     },
     { merge: true }
   );
+}
+
+// 카트 제거
+export async function removeFromCart(uid, id) {
+  const querySnapshot = query(doc(db, "users", "user", `${uid}`, "userBasket", "basket", `${id}`));
+  await deleteDoc(querySnapshot);
+}
+
+// 카트 가져오기
+export async function getCart(uid) {
+  const q = query(collection(db, "users", "user", `${uid}`, "userBasket", "basket"));
+  const querySnapShot = await getDocs(q);
+  return querySnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 }

@@ -14,7 +14,7 @@ export default function ProductDetail() {
   const [selected, setSelected] = useState(size && size[0]);
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = () => {
-    const product = { id, imageUrl, title, price, option: selected, quantity: 1 };
+    const product = { id, imageUrl, title, price, size: selected, quantity: 1 };
     addOrUpdateItem.mutate(product, {
       onSuccess: () => {
         setSuccess("장바구니에 추가되었습니다.");

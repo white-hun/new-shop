@@ -8,11 +8,12 @@ import { useAuthContext } from "../context/AuthContext";
 import { setUserInfo } from "../api/firebase";
 
 export default function Navbar() {
-  const { user, uid, login, logout } = useAuthContext();
+  const { user, userId, login, logout } = useAuthContext();
 
-  const handleLogin = () => {
-    login().then(() => setUserInfo(user, uid));
+  const handleLogin = async () => {
+    login().then(setUserInfo(user, user.uid));
   };
+
   return (
     <header className="flex justify-between">
       <Link to="/" className="flex items-center text-4xl">
