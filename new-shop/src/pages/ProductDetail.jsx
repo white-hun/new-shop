@@ -10,7 +10,7 @@ export default function ProductDetail() {
       product: { id, imageUrl, title, category, price, description, size },
     },
   } = useLocation();
-  const [product, setProduct] = useState({ id, imageUrl, title, price, category, size });
+  // const [product, setProduct] = useState({ id, imageUrl, title, price, category, size });
   const [quantity, setQuantity] = useState(1);
   const [selected, setSelected] = useState(size && size[0]);
   const [success, setSuccess] = useState();
@@ -18,8 +18,17 @@ export default function ProductDetail() {
   const handleMinus = () => setQuantity(quantity - 1);
   const handlePlus = () => setQuantity(quantity + 1);
   const handleSelect = (e) => setSelected(e.target.value);
-  const handleClick = () => {
-    setProduct({ ...product, price: price * quantity, size: selected, quantity }); //
+  const handleClick = async () => {
+    const product = {
+      id,
+      imageUrl,
+      title,
+      category,
+      price: price * quantity,
+      size: selected,
+      quantity,
+    };
+    // setProduct({ ...product, price: price * quantity, size: selected, quantity });
     addOrUpdateItem.mutate(product, {
       onSuccess: () => {
         setSuccess("장바구니에 추가되었습니다.");
