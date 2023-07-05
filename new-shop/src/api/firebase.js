@@ -103,7 +103,7 @@ export async function getProduct() {
 
 // 카트 추가
 export async function addToCart(uid, product) {
-  const carts = collection(db, "users", "user", `${uid}`, "userBasket", "basket");
+  const carts = collection(db, "users", "user", `${uid}`, "userCart", "carts");
   await addDoc(
     carts,
     {
@@ -113,8 +113,7 @@ export async function addToCart(uid, product) {
       title: product.title,
       price: product.price,
       category: product.category,
-      description: product.description,
-      size: product.selected,
+      size: product.size,
       quantity: product.quantity,
     },
     { merge: true }
@@ -123,13 +122,13 @@ export async function addToCart(uid, product) {
 
 // 카트 제거
 export async function removeFromCart(uid, id) {
-  const querySnapshot = query(doc(db, "users", "user", `${uid}`, "userBasket", "basket", `${id}`));
+  const querySnapshot = query(doc(db, "users", "user", `${uid}`, "userCart", "carts", `${id}`));
   await deleteDoc(querySnapshot);
 }
 
 // 카트 가져오기
 export async function getCart(uid) {
-  const q = query(collection(db, "users", "user", `${uid}`, "userBasket", "basket"));
+  const q = query(collection(db, "users", "user", `${uid}`, "userCart", "carts"));
   const querySnapShot = await getDocs(q);
   return querySnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
 }

@@ -12,7 +12,7 @@ export default function Navbar() {
 
   useEffect(() => {
     user && setUserInfo(user);
-  }, []);
+  }, [user]);
 
   return (
     <header className="flex justify-between">

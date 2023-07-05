@@ -10,17 +10,23 @@ export default function ProductDetail() {
       product: { id, imageUrl, title, category, price, description, size },
     },
   } = useLocation();
-  const [success, setSuccess] = useState();
+  const [product, setProduct] = useState({ id, imageUrl, title, price, category, size });
+  const [quantity, setQuantity] = useState(1);
   const [selected, setSelected] = useState(size && size[0]);
+  const [success, setSuccess] = useState();
+
+  const handleMinus = () => setQuantity(quantity - 1);
+  const handlePlus = () => setQuantity(quantity + 1);
   const handleSelect = (e) => setSelected(e.target.value);
   const handleClick = () => {
-    const product = { id, imageUrl, title, price, size: selected, quantity: 1 };
+    setProduct({ ...product, price: price * quantity, size: selected, quantity }); //
     addOrUpdateItem.mutate(product, {
       onSuccess: () => {
         setSuccess("장바구니에 추가되었습니다.");
         setTimeout(() => setSuccess(null), 3000);
       },
     });
+    console.log(product);
   };
   return (
     <>
@@ -29,7 +35,7 @@ export default function ProductDetail() {
         <img src={imageUrl} alt={title} />
         <div>
           <h2>{title}</h2>
-          <p>{`￦${price.toLocaleString()}`}</p>
+          <p>{`￦${price.toLocaleString() * quantity}`}</p>
           <p>{description}</p>
         </div>
         <div>
@@ -37,8 +43,11 @@ export default function ProductDetail() {
           <select id="select" onChange={handleSelect} value={selected}>
             {size && size.map((size, index) => <option key={index}>{size}</option>)}
           </select>
-          {success && <p className="my-2">{success}</p>}
-          <Button text="장바구니에 추가" onClick={handleClick} />
+          {quantity >= 2 ? <Button text="-" onClick={handleMinus} /> : <Button text="-" disabled />}
+          <p>{quantity}</p>
+          <Button text="+" onClick={handlePlus} />
+          {/* {success && <p className="my-2">{success}</p>} */}
+          <Button text={success ? { success } : "장바구니에 추가"} onClick={handleClick} />
         </div>
       </section>
     </>
