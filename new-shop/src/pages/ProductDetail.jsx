@@ -32,7 +32,7 @@ export default function ProductDetail() {
     addOrUpdateItem.mutate(product, {
       onSuccess: () => {
         setSuccess("장바구니에 추가되었습니다.");
-        setTimeout(() => setSuccess(null), 3000);
+        setTimeout(() => setSuccess(null), 2000);
       },
     });
     console.log(product);
@@ -56,7 +56,7 @@ export default function ProductDetail() {
           <p>{quantity}</p>
           <Button text="+" onClick={handlePlus} />
           {/* {success && <p className="my-2">{success}</p>} */}
-          <Button text={success ? { success } : "장바구니에 추가"} onClick={handleClick} />
+          <Button text={success ? success : "장바구니에 추가"} onClick={handleClick} />
         </div>
       </section>
     </>
