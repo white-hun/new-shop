@@ -8,10 +8,10 @@ export default function CartProductCard({
   const { addProduct, removeProduct } = useCart();
   const handleMinus = () => {
     if (quantity > 2) return;
-    addProduct.mutate({ ...product, price: price * quantity, quantity: quantity - 1 });
+    addProduct.mutate({ ...product, quantity: quantity - 1 });
   };
   const handlePlus = () => {
-    addProduct.mutate({ ...product, price: price * quantity, quantity: quantity + 1 });
+    addProduct.mutate({ ...product, quantity: quantity + 1 });
   };
   const handleDelete = () => {
     removeProduct.mutate(id);
@@ -24,13 +24,19 @@ export default function CartProductCard({
           <p>{title}</p>
           <p>{category}</p>
           <p>{size}</p>
-          <p>{price}</p>
+          <p>￦{price}</p>
         </div>
         <div>
-          <button onclick={handleMinus}>-</button>
-          <span>{quantity}</span>
-          <button onclick={handlePlus}>+</button>
-          <button onclick={handleDelete}>X</button>
+          <button className="pr-3" onClick={handleMinus}>
+            -
+          </button>
+          <span className="pr-3">{quantity}</span>
+          <button className="pr-3" onClick={handlePlus}>
+            +
+          </button>
+          <button className="pr-3" onClick={handleDelete}>
+            X
+          </button>
         </div>
       </div>
     </li>

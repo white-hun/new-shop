@@ -1,6 +1,7 @@
 import React from "react";
 import CartProductCard from "../components/CartProductCard";
 import useCart from "../hooks/useCarts";
+import PriceCard from "../components/PriceCard";
 
 export default function MyCart() {
   const {
@@ -21,6 +22,9 @@ export default function MyCart() {
           <ul>
             {product && product.map((prod) => <CartProductCard key={prod.id} product={prod} />)}
           </ul>
+          <div>
+            <PriceCard />
+          </div>
         </>
       )}
     </section>
