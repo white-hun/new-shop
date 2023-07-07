@@ -4,7 +4,7 @@ import Button from "../components/ui/Button";
 import useCart from "../hooks/useCarts";
 
 export default function ProductDetail() {
-  const { addOrUpdateItem } = useCart();
+  const { addProduct } = useCart();
   const {
     state: {
       product: { id, imageUrl, title, category, price, description, size },
@@ -29,7 +29,7 @@ export default function ProductDetail() {
       quantity,
     };
     // setProduct({ ...product, price: price * quantity, size: selected, quantity });
-    addOrUpdateItem.mutate(product, {
+    addProduct.mutate(product, {
       onSuccess: () => {
         setSuccess("장바구니에 추가되었습니다.");
         setTimeout(() => setSuccess(null), 2000);

@@ -16,6 +16,7 @@ import {
   getFirestore,
   query,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 
@@ -131,4 +132,10 @@ export async function getCart(uid) {
   const q = query(collection(db, "users", "user", `${uid}`, "userCart", "carts"));
   const querySnapShot = await getDocs(q);
   return querySnapShot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+}
+
+// 카트 업데이트
+export async function updateCart(id, uid, product) {
+  const q = doc(db, "users", "user", `${uid}`, "userCart", "carts", `${id}`);
+  await updateDoc(q, product);
 }

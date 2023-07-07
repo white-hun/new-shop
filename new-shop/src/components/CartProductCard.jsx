@@ -5,16 +5,19 @@ export default function CartProductCard({
   product,
   product: { id, imageUrl, title, price, quantity, size, category },
 }) {
-  const { addProduct, removeProduct } = useCart();
+  const { updateProduct, removeProduct } = useCart();
   const handleMinus = () => {
-    if (quantity > 2) return;
-    addProduct.mutate({ ...product, quantity: quantity - 1 });
+    if (quantity >= 2) return updateProduct.mutate({ ...product, quantity: quantity - 1 });
   };
   const handlePlus = () => {
-    addProduct.mutate({ ...product, quantity: quantity + 1 });
+    updateProduct.mutate({ ...product, quantity: quantity + 1 });
   };
-  const handleDelete = () => {
-    removeProduct.mutate(id);
+  const handleDelete = async () => {
+    removeProduct.mutate(id, {
+      onSuccess: () => {
+        window.confirm("삭제되었습니다.");
+      },
+    });
   };
   return (
     <li className="flex">
