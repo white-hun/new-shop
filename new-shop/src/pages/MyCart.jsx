@@ -3,6 +3,8 @@ import CartProductCard from "../components/CartProductCard";
 import useCart from "../hooks/useCarts";
 import PriceCard from "../components/PriceCard";
 
+const SHIPPING = 3000;
+
 export default function MyCart() {
   const {
     cartQuery: { isLoading, data: product },
@@ -11,7 +13,8 @@ export default function MyCart() {
   if (isLoading) return <p>Loading...</p>;
 
   const hasProducts = product && product.length > 0;
-  //
+  const totalPrice =
+    product && product.reduce((prev, curr) => prev + parseInt(curr.price) * curr.quantity, 0);
 
   return (
     <section className="p-8 flex flex-col">
@@ -23,7 +26,9 @@ export default function MyCart() {
             {product && product.map((prod) => <CartProductCard key={prod.id} product={prod} />)}
           </ul>
           <div>
-            <PriceCard />
+            <PriceCard text="상품 총액" price={totalPrice} />
+            <PriceCard text="배송비" price={SHIPPING} />
+            <PriceCard text="총 가격" price={totalPrice + SHIPPING} />
           </div>
         </>
       )}

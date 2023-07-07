@@ -24,7 +24,7 @@ export default function CartProductCard({
           <p>{title}</p>
           <p>{category}</p>
           <p>{size}</p>
-          <p>￦{price}</p>
+          <p>￦{price.toLocaleString()}</p>
         </div>
         <div>
           <button className="pr-3" onClick={handleMinus}>
