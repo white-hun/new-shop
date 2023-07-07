@@ -6,6 +6,7 @@ import UserProfile from "./UserProfile";
 import Button from "./ui/Button";
 import { useAuthContext } from "../context/AuthContext";
 import { setUserInfo } from "../api/firebase";
+import CartProductCount from "./CartProductCount";
 
 export default function Navbar() {
   const { user, login, logout } = useAuthContext();
@@ -26,7 +27,7 @@ export default function Navbar() {
         </Link>
         {user && user.uid !== process.env.REACT_APP_ADMIN_UID && (
           <Link to="/carts" className="text-2xl mr-6">
-            <BsBag />
+            <CartProductCount />
           </Link>
         )}
         {user && user.uid === process.env.REACT_APP_ADMIN_UID && (
