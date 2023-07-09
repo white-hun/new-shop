@@ -11,6 +11,7 @@ import AllProducts from "./pages/AllProducts";
 import NewProduct from "./pages/NewProduct";
 import ProductDetail from "./pages/ProductDetail";
 import MyCart from "./pages/MyCart";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -20,9 +21,23 @@ const router = createBrowserRouter([
     children: [
       { index: true, path: "/", element: <Home /> },
       { path: "/products", element: <AllProducts /> },
-      { path: "/product/new", element: <NewProduct /> },
       { path: "/product/:id", element: <ProductDetail /> },
-      { path: "/carts", element: <MyCart /> },
+      {
+        path: "/product/new",
+        element: (
+          <ProtectedRoute requireAdmin text="접근 권한이 없습니다.">
+            <NewProduct />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/carts",
+        element: (
+          <ProtectedRoute text="로그인 해주세요.">
+            <MyCart />
+          </ProtectedRoute>
+        ),
+      },
     ],
   },
 ]);
